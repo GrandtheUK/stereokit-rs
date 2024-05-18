@@ -6756,6 +6756,13 @@ impl WindowContext {
 			stereokit_sys::ui_button_img(c_str.as_ptr() as *const i8, sprite.0.as_mut(), image_layout as ui_btn_layout_) != 0
 		}
 	}
+	pub fn button_img_size(&self,text: impl AsRef<str>, sprite: &mut Sprite, image_layout: UiBtnLayout, size: impl Into<Vec2>) -> bool {
+		let c_str = std::ffi::CString::new(text.as_ref()).unwrap();
+
+		unsafe {
+			stereokit_sys::ui_button_img_sz(c_str.as_ptr() as *const i8, sprite.0.as_mut(), image_layout as ui_btn_layout_, size.into().into()) != 0
+		}
+	}
 	pub fn same_line(&self) {
 		unsafe {
 			stereokit_sys::ui_sameline()
