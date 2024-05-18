@@ -6801,4 +6801,9 @@ impl WindowContext {
 			stereokit_sys::ui_layout_at()
 		}.into()
 	}
+	pub fn image(&self, image: &mut Sprite, size: impl Into<Vec2>) {
+		unsafe {
+			stereokit_sys::ui_image(image.0.as_mut(), size.into().into());
+		}
+	}
 }
