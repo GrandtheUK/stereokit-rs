@@ -2579,6 +2579,15 @@ pub enum UiColor {
 	Max = 5,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum UiBtnLayout {
+	None = 0,
+	Left = 1,
+	Right = 2,
+	Centre = 3,
+	CentreNoText = 4,
+}
+
 /// All stereokit functions that *must* only be done in the render loop
 pub trait StereoKitDraw: StereoKitSingleThread {
 	/// Adds a mesh to the render queue for this frame! If the Hierarchy has a transform on it, that transform is combined with the Matrix provided here.
@@ -6738,6 +6747,13 @@ impl WindowContext {
 		let c_str = std::ffi::CString::new(text.as_ref()).unwrap();
 		unsafe {
 			stereokit_sys::ui_button_at(c_str.as_ptr(), window_relative_pos.into().into(), size.into().into()) != 0
+		}
+	}
+	pub fn button_img(&self,text: impl AsRef<str>, sprite: &mut Sprite, image_layout: UiBtnLayout) -> bool {
+		let c_str = std::ffi::CString::new(text.as_ref()).unwrap();
+
+		unsafe {
+			stereokit_sys::ui_button_img(c_str.as_ptr() as *const i8, sprite.0.as_mut(), image_layout as ui_btn_layout_) != 0
 		}
 	}
 	pub fn same_line(&self) {
